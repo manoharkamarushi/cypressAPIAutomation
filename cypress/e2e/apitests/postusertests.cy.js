@@ -12,14 +12,29 @@ describe('post user tests',()=>{
             body: {
                 "name": "manohar automation",
                 "gender": "male",
-                "email": "manohartesting3@gmail.com",
+                "email": "manohartesting123456@gmail.com",
                 "status":"active"
             }
         }).then((response)=>{
+
             expect(response.status).to.eq(201)
-            expect(response.body).has.property('email','manohartesting3@gmail.com')
+            expect(response.body).has.property('email','manohartesting123456@gmail.com')
             expect(response.body).has.property('name','manohar automation')
             expect(response.body).has.property('gender','male')
+            cy.log(JSON.stringify(response))
+
+            const userid = response.body.id
+            cy.request({
+                method: 'GET',
+                url: 'https://gorest.co.in/public/v2/users/'+userid,
+                headers: {
+                  'authorization' : "Bearer " + accesstoken   
+             }
+                
+            }).then((res)=>{
+                expect(res.status).to.eq(200)
+                expect(res.body.id).eq(userid)
+            })
         })
     })
 
