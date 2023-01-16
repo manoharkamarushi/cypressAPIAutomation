@@ -1,1 +1,2 @@
-# cypressAPIAutomation
+# cypressAPIAutomation project
+cypressAPIAutomation
